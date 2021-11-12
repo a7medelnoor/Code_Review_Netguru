@@ -19,6 +19,31 @@ android {
     }
 
     buildTypes {
+        /** - Enables code shrinking, obfuscation, and optimization for only project's
+         *  release build type.
+         * We should always set minifyEnabled to true to decrease the size of our application
+         * and detect any code libraries that are not being used and ignore them from the final apk.
+
+         *- Includes the default ProGuard rules files that are packaged with the Android Gradle plugin
+         *  or we can configure our own proguard.
+         * it's better to enable proguard rules in our application project specifically on production build
+         * and we can add Retrofit, OkHttp, Gson, Models class to more secure for our application and
+         * preventing people from reverse engineering as following:-
+         release {
+
+         minifyEnabled true
+         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+         }
+         * our we can configure our own proguard rules instead of using the default google proguard
+         release {
+
+         minifyEnabled true
+         proguardFiles 'proguard-rules.pro'
+
+         }
+         *
+         * **/
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -34,6 +59,15 @@ android {
 }
 
 dependencies {
+    /**
+     * there is no module with a name (shoplist) so when running the project it gives an error
+     * on the project build that says the path could not be found in the project root.
+     * if we have modules we can implement them using the implement project otherwise
+     * it will give a path not found error on the project build **/
+
+    // commented because there is no module or path with the provided name on the root project
+    // implementation project(":shoplist")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
